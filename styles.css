@@ -94,7 +94,7 @@ main {
 }
 
 /* Button Styles */
-.btn {
+.btns {
     display: inline-block;
     background-color: #3498db;
     color: white;
