@@ -1,8 +1,10 @@
-console.log('Site loaded');
+console.log("Site loaded");
 
-// ✅ Initialize EmailJS
+// =============================
+//  INITIALIZE EMAILJS
+// =============================
 document.addEventListener("DOMContentLoaded", function () {
-    emailjs.init("BrQ5-jaAzRl0OrP-B"); // <-- Replace after EmailJS setup
+    emailjs.init("BrQ5-jaAzRl0OrP-B"); // Replace with your EmailJS Public Key
 
     const appointmentForm = document.getElementById("appointmentForm");
 
@@ -10,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
         appointmentForm.addEventListener("submit", function (e) {
             e.preventDefault();
 
-            // Collect form data
+            // COLLECT FORM DATA
             const formData = {
                 name: document.getElementById("name").value,
                 phone: document.getElementById("phone").value,
@@ -22,47 +24,57 @@ document.addEventListener("DOMContentLoaded", function () {
                 message: document.getElementById("message").value
             };
 
-            // ✅ Send Email via EmailJS
-            emailjs.send("service_e2jroob", "template_he2jcjm", formData)
+            // =============================
+            // SEND EMAIL USING EMAILJS
+            // =============================
+            emailjs
+                .send("service_e2jroob", "template_he2jcjm", formData)
                 .then(() => {
-                    alert(
-                        `✅ Thank you, ${formData.name}!\n\n` +
-                        `Your appointment request has been submitted.\n` +
-                        `A confirmation email has been sent to ${formData.email}.\n\n` +
-                        `We will contact you at ${formData.phone} to confirm your appointment.\n\n` +
-                        `Date: ${formData.date}\nTime: ${formData.time}\nDepartment: ${formData.department}\n` +
-                        `${formData.doctor ? 'Preferred Doctor: ' + formData.doctor : ''}`
-                    );
+                    // SHOW SUCCESS POPUP
+                    const popup = document.getElementById("successPopup");
+                    popup.classList.add("show");
 
+                    // AUTO HIDE POPUP
+                    setTimeout(() => {
+                        popup.classList.remove("show");
+                    }, 3000);
+
+                    // RESET FORM
                     appointmentForm.reset();
                 })
                 .catch((error) => {
                     console.error("EmailJS Error:", error);
-                    alert("❌ Something went wrong while sending the email. Try again.");
+                    alert("❌ Something went wrong while sending the email. Please try again.");
                 });
         });
     }
 
-    // Highlight active nav link
+    // =============================
+    // ACTIVE MENU HIGHLIGHT
+    // =============================
     const currentPage = window.location.pathname.split("/").pop();
     const navLinks = document.querySelectorAll("nav a");
 
-    navLinks.forEach(link => {
+    navLinks.forEach((link) => {
         if (link.getAttribute("href") === currentPage) {
             link.classList.add("active");
         }
     });
 
-    // Set minimum appointment date to today
+    // =============================
+    // MINIMUM DATE SET TO TODAY
+    // =============================
     const dateInput = document.getElementById("date");
     if (dateInput) {
         const today = new Date().toISOString().split("T")[0];
         dateInput.min = today;
     }
 
-    // Button click animation
+    // =============================
+    // BUTTON CLICK ANIMATION
+    // =============================
     const buttons = document.querySelectorAll(".btn");
-    buttons.forEach(button => {
+    buttons.forEach((button) => {
         button.addEventListener("click", function () {
             this.style.transform = "scale(0.95)";
             setTimeout(() => {
